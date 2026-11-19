@@ -1,0 +1,106 @@
+/* Vice Nights — dark neon editor chrome. All art is drawn on canvas. */
+:root {
+  --bg: #0d0618;
+  --panel: #17102a;
+  --panel-edge: #2c1c52;
+  --ink: #f4eefc;
+  --muted: #a99cc9;
+  --pink: #ff2e88;
+  --cyan: #21e6e0;
+  --amber: #ffb02e;
+  --violet: #7b2fff;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  min-height: 100vh;
+}
+#topbar {
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #2a0a4a, #12041f 60%, #0d0618);
+  border-bottom: 2px solid var(--pink);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand-mark {
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  background: linear-gradient(135deg, var(--amber), var(--pink) 55%, var(--violet));
+  color: #fff; padding: 2px 9px; border-radius: 6px; letter-spacing: 1px;
+}
+.brand-name {
+  font-family: "Arial Black", Arial, sans-serif; font-weight: 900;
+  font-size: 22px; letter-spacing: 3px; color: #fff;
+}
+.brand-sub { color: var(--cyan); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+.steps { margin-left: auto; display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 13px; }
+.step b {
+  display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center;
+  border-radius: 50%; background: var(--violet); color: #fff; margin-right: 6px; font-size: 12px;
+}
+.step-arrow { color: var(--pink); font-weight: 900; }
+#studio { display: flex; gap: 18px; padding: 18px 20px; align-items: flex-start; }
+#preview-pane { flex: 1 1 auto; min-width: 0; }
+#canvas-wrap {
+  background: #05030a; border: 1px solid var(--panel-edge); border-radius: 10px;
+  padding: 14px; display: flex; justify-content: center;
+}
+#cover {
+  max-width: 100%; max-height: calc(100vh - 190px); width: auto; height: auto;
+  box-shadow: 0 0 0 3px #fff2, 0 18px 50px #000c; border-radius: 4px;
+  cursor: crosshair;
+}
+#status { color: var(--muted); font-size: 13px; text-align: center; }
+#controls { flex: 0 0 320px; display: flex; flex-direction: column; gap: 14px; }
+.panel {
+  background: var(--panel); border: 1px solid var(--panel-edge);
+  border-radius: 10px; padding: 14px 16px;
+}
+.panel h2 {
+  margin: 0 0 10px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--cyan);
+}
+.hint { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin: 6px 0; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+button, .file-btn {
+  font: inherit; color: var(--ink); background: #241640;
+  border: 1px solid var(--panel-edge); border-radius: 8px;
+  padding: 8px 12px; cursor: pointer;
+}
+button:hover, .file-btn:hover { border-color: var(--pink); }
+button.active { background: var(--pink); border-color: var(--pink); color: #fff; font-weight: 700; }
+.file-btn { display: inline-block; }
+.file-btn input { display: none; }
+.btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.field { display: block; margin: 10px 0; font-size: 13px; color: var(--muted); }
+.field input[type="text"], .field select {
+  display: block; width: 100%; margin-top: 5px; padding: 8px 10px;
+  background: #0d0618; color: var(--ink); border: 1px solid var(--panel-edge);
+  border-radius: 8px; font: inherit;
+}
+.field input[type="range"] { display: block; width: 100%; accent-color: var(--pink); }
+.strip { display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+.strip .thumb {
+  width: 64px; height: 64px; object-fit: cover; border-radius: 8px;
+  border: 2px solid var(--panel-edge); cursor: pointer; background: #000;
+}
+.strip .thumb.used { border-color: var(--cyan); }
+.export {
+  width: 100%; padding: 13px; font-size: 16px; font-weight: 800; letter-spacing: 1px;
+  background: linear-gradient(90deg, var(--pink), var(--violet)); border: none; color: #fff;
+}
+.export:hover { filter: brightness(1.15); }
+/* Screenshot mode: hide the editor chrome and show only the cover, edge to edge. */
+body.cover-only #topbar, body.cover-only #controls, body.cover-only #status { display: none; }
+body.cover-only { background: #000; }
+body.cover-only #studio { padding: 0; }
+body.cover-only #preview-pane { width: 100vw; }
+body.cover-only #canvas-wrap { border: 0; border-radius: 0; padding: 0; background: #000; height: 100vh; }
+body.cover-only #cover { max-height: 100vh; box-shadow: none; border-radius: 0; }
+@media (max-width: 900px) {
+  #studio { flex-direction: column; }
+  #controls { flex-basis: auto; width: 100%; }
+  .steps { display: none; }
+}

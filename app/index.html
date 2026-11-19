@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Nights — GTA 6-style Cover Art Maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand"><span class="brand-mark">VN</span><span class="brand-name">VICE NIGHTS</span><span class="brand-sub">cover art studio</span></div>
+  <div class="steps"><span class="step"><b>1</b> Add photos</span><span class="step-arrow">›</span><span class="step"><b>2</b> Pick layout &amp; grade</span><span class="step-arrow">›</span><span class="step"><b>3</b> Export PNG</span></div>
+</header>
+<main id="studio">
+  <section id="preview-pane">
+    <div id="canvas-wrap"><canvas id="cover" width="1080" height="1350"></canvas></div>
+    <p id="status">Loading sample photos…</p>
+  </section>
+  <aside id="controls">
+    <section class="panel" id="photos-panel">
+      <h2>Photos</h2>
+      <p class="hint">Your photos stay on your machine — nothing is uploaded.</p>
+      <div class="row">
+        <label class="file-btn">+ Add photo<input id="file-input" type="file" accept="image/*" multiple hidden></label>
+        <button id="samples-btn" type="button">Load samples</button>
+        <button id="clear-btn" type="button">Clear</button>
+      </div>
+      <div id="photo-strip" class="strip"></div>
+      <p class="hint">Click a panel in the preview to select it, then crop it below.</p>
+      <label class="field">Panel photo
+        <select id="panel-photo"></select>
+      </label>
+      <label class="field">Zoom <span id="zoom-val">100%</span>
+        <input id="zoom" type="range" min="100" max="300" value="100">
+      </label>
+      <label class="field">Move sideways
+        <input id="pan-x" type="range" min="-100" max="100" value="0">
+      </label>
+      <label class="field">Move up / down
+        <input id="pan-y" type="range" min="-100" max="100" value="0">
+      </label>
+    </section>
+    <section class="panel" id="layout-panel">
+      <h2>Layout</h2>
+      <div id="layout-btns" class="btn-grid">
+        <button type="button" data-layout="hero">Hero</button>
+        <button type="button" data-layout="triple" class="active">Triple split</button>
+        <button type="button" data-layout="duo">Duo</button>
+        <button type="button" data-layout="quad">Four grid</button>
+      </div>
+      <h2>Sunset grade</h2>
+      <div id="grade-btns" class="btn-grid">
+        <button type="button" data-grade="sunset" class="active">Vice Sunset</button>
+        <button type="button" data-grade="neon">Neon Nights</button>
+        <button type="button" data-grade="dusk">Palm Dusk</button>
+        <button type="button" data-grade="noir">Mono Noir</button>
+      </div>
+    </section>
+    <section class="panel" id="caption-panel">
+      <h2>Caption</h2>
+      <label class="field">Title
+        <input id="title" type="text" value="VICE NIGHTS" maxlength="24">
+      </label>
+      <label class="field">Tagline
+        <input id="tagline" type="text" value="SUNSET &middot; PALMS &middot; NEON" maxlength="48">
+      </label>
+      <label class="field">Footer
+        <input id="footer" type="text" value="A POSTER MADE WITH VICE NIGHTS" maxlength="48">
+      </label>
+    </section>
+    <section class="panel" id="export-panel">
+      <h2>Export</h2>
+      <label class="field">Post size
+        <select id="export-size">
+          <option value="1080x1080">Square — 1080 × 1080</option>
+          <option value="1080x1350" selected>Portrait — 1080 × 1350</option>
+          <option value="1920x1080">Wide — 1920 × 1080</option>
+        </select>
+      </label>
+      <button id="export-btn" type="button" class="export">Export PNG ↓</button>
+      <p class="hint">One click, no waiting: the cover is drawn straight from the live preview.</p>
+    </section>
+  </aside>
+</main>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
