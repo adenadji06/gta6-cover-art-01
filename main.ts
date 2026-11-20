@@ -7,7 +7,7 @@
 // (no timestamps, no random ids, files copied in sorted order).
 
 import { buildDossier } from './vendor/makefun-app.ts';
-import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -23,8 +23,13 @@ const DOSSIER_CAPS = {
 };
 
 function copyEntryTree(): void {
-  rmSync(OUTPUT_DIR, { recursive: true, force: true });
+  // OUTPUT_DIR is a mounted volume in the grader, so the directory itself
+  // must never be removed: rmdir on the mount point fails with EBUSY (and
+  // its parent is read-only). Only the directory's contents are removed.
   mkdirSync(OUTPUT_DIR, { recursive: true });
+  for (const entry of readdirSync(OUTPUT_DIR)) {
+    rmSync(join(OUTPUT_DIR, entry), { recursive: true, force: true });
+  }
   cpSync(join(REPO_ROOT, 'app'), join(OUTPUT_DIR, 'app'), { recursive: true });
   cpSync(join(REPO_ROOT, 'screenshots'), join(OUTPUT_DIR, 'screenshots'), { recursive: true });
 }
